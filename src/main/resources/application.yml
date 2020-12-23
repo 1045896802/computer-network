@@ -1,0 +1,45 @@
+spring:
+  datasource: #数据库配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${datasource.url}?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&autoReconnect=true&failOverReadonly=false&maxReconnects=10
+    username: root
+    password: 19980925
+    hikari:
+      maximum-pool-size: 10 #最大连接池数
+      max-lifetime: 1770000
+
+#数据库地址
+datasource:
+  url: localhost:3306/computer-network
+
+
+mybatis:
+  #指定别名设置的包为所有entity
+  type-aliases-package: com.nju.entity
+  configuration:
+    map-underscore-to-camel-case: true #驼峰命名规范
+
+  mapper-locations: # mapper映射文件位置
+    - classpath:com/nju/mapper/*.xml
+
+
+#交换机的配置
+switch:
+  ip: 172.19.240.90
+  port: 23
+  user: root
+  password: 19980925
+
+#路由器的配置
+router:
+  router1: 172.16.0.2
+  router2: 172.16.0.3
+  router3: 172.16.0.4
+
+
+
+
+
+
+
+
