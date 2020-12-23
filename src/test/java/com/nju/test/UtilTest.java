@@ -1,5 +1,6 @@
 package com.nju.test;
 
+import com.nju.dao.ConfigDao;
 import com.nju.service.RouterConfigService;
 import com.nju.utils.TelnetUtil;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class UtilTest {
     @Autowired
     private TelnetUtil telnetUtil;
     @Autowired
-    private RouterConfigService routerConfigService;
+    private ConfigDao configDao;
 
     @Test
     public void configTest() {
@@ -27,6 +28,12 @@ public class UtilTest {
                 "ifconfig"
         };
         telnetUtil.sendCommands(commands);
+        System.out.println("test");
+    }
+
+    @Test
+    public void test() {
+        System.out.println(configDao.getAllConfig());
         System.out.println("test");
     }
 }

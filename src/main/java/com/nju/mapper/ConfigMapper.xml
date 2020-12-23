@@ -5,10 +5,11 @@
     <resultMap id="BaseResultMap" type="com.nju.entity.Config">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="router" jdbcType="VARCHAR" property="router"/>
-        <result column="port" jdbcType="VARCHAR" property="port"/>
+        <result column="routerPwd" jdbcType="VARCHAR" property="routerPwd"/>
+        <result column="routerEnablePwd" jdbcType="VARCHAR" property="routerEnablePwd"/>
         <result column="ip" jdbcType="VARCHAR" property="ip"/>
         <result column="mask" jdbcType="VARCHAR" property="mask"/>
-        <result column="isNoShutdown" jdbcType="VARCHAR" property="isNoShutdown"/>
+        <result column="nextHop" jdbcType="VARCHAR" property="nextHop"/>
     </resultMap>
 
     <select id="getConfigByRouter" resultType="Config" parameterType="String">

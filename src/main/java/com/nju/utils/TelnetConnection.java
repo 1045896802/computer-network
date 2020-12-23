@@ -16,7 +16,14 @@ public class TelnetConnection {
     private PrintStream out;
     private char prompt = '$';
 
-    // 普通用户登录
+    /**
+     * 普通用户登录
+     *
+     * @param ip
+     * @param port
+     * @param user
+     * @param password
+     */
     public TelnetConnection(String ip, int port, String user, String password) {
         try {
             telnet.connect(ip, port);
@@ -31,7 +38,10 @@ public class TelnetConnection {
     }
 
     /**
-     * 登录 * * @param user * @param password
+     * 登录
+     *
+     * @param user
+     * @param password
      */
     public void login(String user, String password) {
         readUntil("login:");
@@ -42,7 +52,10 @@ public class TelnetConnection {
     }
 
     /**
-     * 读取分析结果 * * @param pattern * @return
+     * 读取分析结果
+     *
+     * @param pattern
+     * @return
      */
     public String readUntil(String pattern) {
         try {
@@ -65,7 +78,9 @@ public class TelnetConnection {
     }
 
     /**
-     * 写操作 * * @param value
+     * 写操作
+     *
+     * @param value
      */
     public void write(String value) {
         try {
@@ -77,7 +92,10 @@ public class TelnetConnection {
     }
 
     /**
-     * 向目标发送命令字符串 * * @param command * @return
+     * 向目标发送命令字符串
+     *
+     * @param command
+     * @return
      */
     public String sendCommand(String command) {
         try {

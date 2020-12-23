@@ -71,7 +71,7 @@ public class RouterConfigServiceImpl implements RouterConfigService {
             }
         }
         if (list.size() == 0) {
-            list.add("ping通过");
+            list.add("ping测试通过");
         }
         return list;
     }
