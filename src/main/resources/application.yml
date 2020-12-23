@@ -26,15 +26,27 @@ mybatis:
 #交换机的配置
 switch:
   ip: 172.19.240.90
+  #ip: 172.16.0.1
   port: 23
   user: root
   password: 19980925
 
 #路由器的配置
+#router:
+#  router1:
+#    ip: 172.16.0.2
+#    serial0: 172.17.0.1
+#  router2:
+#    ip: 172.16.0.3
+#    serial0: 172.17.0.2
+#    serial1: 172.18.0.1
+#  router3:
+#    ip: 172.16.0.4
+#    serial1: 172.18.0.2
+
+#路由器的配置
 router:
-  router1: 172.16.0.2
-  router2: 172.16.0.3
-  router3: 172.16.0.4
+  ip: 172.16.0.2,172.16.0.3,172.16.0.4
 
 
 

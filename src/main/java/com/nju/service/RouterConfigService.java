@@ -36,7 +36,7 @@ public interface RouterConfigService {
     /**
      * 测试连通性
      *
-     * @return
+     * @return ping的结果
      */
-    Boolean ping();
+    List ping();
 }

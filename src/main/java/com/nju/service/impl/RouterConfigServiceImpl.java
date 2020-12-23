@@ -5,8 +5,10 @@ import com.nju.entity.Config;
 import com.nju.service.RouterConfigService;
 import com.nju.utils.TelnetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +21,9 @@ public class RouterConfigServiceImpl implements RouterConfigService {
     ConfigDao configDao;
     @Autowired
     TelnetUtil telnetUtil;
+
+    @Value("#{'${router.ip:}'.split(',')}")
+    private String[] router;
 
     @Override
     public List getConfigByRouter(String router) {
@@ -45,33 +50,29 @@ public class RouterConfigServiceImpl implements RouterConfigService {
     }
 
     @Override
-    public Boolean ping() {
-        String[] commands;
-        String r1 = "1", r2 = "2", r3 = "3";
+    public List ping() {
+        //String[] commands=new String[router.length];
+        List<String> list = new ArrayList<>();
 
-        //R1测试
-        commands = new String[]{
-                "telnet " + r1,
-                "ping " + r2,
-                "ping " + r3
-        };
-        telnetUtil.sendCommands(commands);
+        //router1测试
+//        commands = new String[]{
+//                "telnet " + router1,
+//                "ping " + router2,
+//                "ping " + router3
+//        };
 
-        //R2测试
-         commands = new String[]{
-                "telnet " + r2,
-                "ping " + r1,
-                "ping " + r3
-        };
-        telnetUtil.sendCommands(commands);
-
-        //R3测试
-        commands = new String[]{
-                "telnet " + r3,
-                "ping " + r1,
-                "ping " + r2
-        };
-        telnetUtil.sendCommands(commands);
-        return true;
+        for (int i = 0; i < router.length; i++) {
+            telnetUtil.sendCommand("telnet " + router[i]);
+            for (int j = 0; j < router.length; j++) {
+                telnetUtil.sendCommand("ping " + router[j]);
+//                if() {
+//                    list.add("Router "+i+"与Router "+j+"不通");
+//                }
+            }
+        }
+        if (list.size() == 0) {
+            list.add("ping通过");
+        }
+        return list;
     }
 }

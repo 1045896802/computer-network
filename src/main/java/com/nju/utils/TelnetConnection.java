@@ -100,10 +100,6 @@ public class TelnetConnection {
         }
     }
 
-//    public Boolean execute(Config config){
-//
-//    }
-
     public static void main(String[] args) {
         try {
             System.out.println("启动Telnet...");

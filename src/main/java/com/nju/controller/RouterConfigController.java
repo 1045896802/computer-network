@@ -21,13 +21,13 @@ public class RouterConfigController {
     @RequestMapping("/getConfig")
     public Result getConfig(String router) {
         List<Config> list = routerConfigService.getConfigByRouter(router);
-        return new Result().setData(list);
+        return new Result().setSuccess(true).setData(list);
     }
 
     @RequestMapping("/getAllConfig")
     public Result getAllConfig() {
         List<Config> list = routerConfigService.getAllConfig();
-        return new Result().setData(list);
+        return new Result().setSuccess(true).setData(list);
     }
 
     @RequestMapping("/routerConfig")
@@ -36,5 +36,11 @@ public class RouterConfigController {
 //        return new Result().setSuccess(b);
         System.out.println(config);
         return new Result().setData(config);
+    }
+
+    @RequestMapping("/ping")
+    public Result ping() {
+        List<String> list = routerConfigService.ping();
+        return new Result().setSuccess(true).setData(list);
     }
 }
