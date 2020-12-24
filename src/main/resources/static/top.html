@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>网络拓扑</title>
+    <style>
+        .wrap {
+            width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #left {
+            width: 200px;
+            height: 500px;
+            float: left;
+        }
+
+        #right {
+            width: 700px;
+            height: 500px;
+            float: left;
+        }
+    </style>
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script language="javascript">
+        function pc(element) {
+            name = element.id;
+            document.getElementById("device").value = name;
+            return false;
+        }
+    </script>
+    <script language="javascript">
+        function set() {
+            alert(222);
+            var device = document.getElementById("device").value;
+            alert(device);
+            var portItem = document.getElementsByName("port").value;
+            var nextHop = document.getElementById("nextHop").value;
+            var port;
+            alert(portItem);
+            for (var i = 0; i < portItem.length; i++) {
+                alert(1);
+                port = portItem[i].checked;
+                if (portItem[i].checked == true) {
+                    port = portItem[i].value;
+                    break;
+                }
+            }alert(port);
+            var ip = document.getElementById("ip").value;
+            var subnet = document.getElementById("sunbet").value;
+            alert(device);
+            alert(ip);
+            alert(nextHop);
+
+            $.ajax({
+                type: "post",
+                data: {
+                    "router": device,
+                    "ip": ip,
+                    "mask": subnet,
+                    "nextHop": nextHop
+                },
+                url: "/routerConfig",
+                success:
+                    function () {
+//				if(device=="router1"){
+//					if(port=="S0"){
+//						document.getElementById("router1s").src="lgline.jpg";
+//					}
+//					else if(port=="E0"&&port=="E1"){
+//						document.getElementById("router12e").src="lgline.jpg";
+//					}
+//				}
+//				else if(device=="router2"){
+//					if(port=="S0"){
+//						document.getElementById("router2s").src="line1.jpg";
+//					}
+//					else if(port=="E0){
+//						document.getElementById("router12e").src="vgline.jpg";
+//					}
+//					else if(port=="E1"){
+//						document.getElementById("router23e").src="vgline.jpg";
+//					}
+//			}
+//				else if(device=="router3"){
+//					if(port=="S0"){
+//						document.getElementById("router3s").src="rgline.jpg";
+//					}
+//					else if(port=="E0"&&port=="E1"){
+//						document.getElementById("router23e").src="vgline.jpg";
+//					}
+//				}
+//		window.alert("设置成功")
+                    },
+
+                error: function () {
+//						window.alert("设置失败");
+                }
+
+            })
+            ;
+
+           /// return false;
+        }
+    </script>
+    <script>
+        function ping() {
+            $.ajax({
+                type: "post",
+                url: "/ping",
+                data: "",
+                dataType: "json",
+                success: function (data) {
+                    var result = eval(data);
+
+                    document.getElementById("pingresult").value = result;
+                }
+            });
+            return false;
+        }
+    </script>
+</head>
+
+<body>
+<div class="wrap">
+    <aside id="right">
+
+        <p align="center">
+            <input name="pc" type="image" disabled="disabled" id="pc" onClick="pc(this)" src="pc.jpg" width="50"
+                   height="50">
+        </p>
+        <p align="center">
+            <img src="line1.jpg" width="17" height="99" alt=""/></p>
+        <p align="center">
+            <input name="swithcer" type="image" disabled="disabled" id="swithcer" onClick="pc(this)" src="switcher.jpg"
+                   width="" height="50">
+        </p>
+
+        <p align="center">
+            <img src="lline.jpg" width="87" height="98" alt="" id="router1s"/> <img src="bline.jpg" width="15"
+                                                                                    height="99" alt="" id="router2s"/>
+            <img src="rline.jpg" width="87" height="98" alt="" id="router3s"/></p>
+        <p align="center">
+            <input name="router1" type="image" id="router1" src="router.jpg" width="50" height="50" onClick="pc(this)">
+            <img src="vline.jpg" width="61" height="11" alt="" id="router12e"/>
+            <input name="router2" type="image" id="router2" src="router.jpg" width="50" height="50" onClick="pc(this)">
+            <img src="vline.jpg" width="61" height="11" alt="" id="router23e"/>
+            <input name="router3" type="image" id="router3" src="router.jpg" width="50" height="50" onClick="pc(this)">
+        </p>
+        <p align="center">
+            <input type="button" name="ping" value="PING" style="font-size: 25px" onClick="ping()">
+        </p>
+        <p align="center">
+            <textarea name="pingresult" readonly="readonly" wrap="hard" id="pingresult"
+                      style="font-size:40px "></textarea>
+        </p>
+
+    </aside>
+    <section id="left">
+        <form style="font-size: 20px">
+            <div>
+                设备名称：
+                <input type="text" id="device" readonly="readonly">
+            </div>
+            <div>
+                <p>端口：</p>
+                <p>
+                    <label>
+                        <input type="radio" name="port" value="E0" id="port_e0">
+                        E0</label>
+                    <br>
+                    <label>
+                        <input type="radio" name="port" value="E1" id="port_e1">
+                        E1</label>
+                    <br>
+                    <label>
+                        <input type="radio" name="port" value="S0" id="port_s0">
+                        S0</label>
+                    <br>
+                </p>
+            </div>
+            <p></p>
+            <div>
+                IP ：
+                <input type="text" id="ip"></div>
+            <div>
+                IP Route ：
+                <input type="text" id="iproute"></div>
+            <div>
+                子网 ：
+                <input type="text" id="subnet">
+
+            </div>
+            <div>
+                下一跳 ：
+                <input type="text" id="nextHop">
+
+            </div>
+            <div>
+                <input type="button" name="save" value="保存" onclick="set()"><input type="reset">
+            </div>
+        </form>
+
+    </section>
+</div>
+</body>
+</html>
