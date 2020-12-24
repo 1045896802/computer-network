@@ -3,6 +3,7 @@ package com.nju.controller;
 import com.nju.entity.Config;
 import com.nju.entity.Result;
 import com.nju.service.RouterConfigService;
+import com.nju.utils.TelnetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,8 @@ import java.util.List;
 public class RouterConfigController {
     @Autowired
     RouterConfigService routerConfigService;
+    @Autowired
+    TelnetUtil telnetUtil;
 
     @RequestMapping("/getConfig")
     public Result getConfig(String router) {
@@ -44,5 +47,13 @@ public class RouterConfigController {
         System.out.println("123456");
         List<String> list = routerConfigService.ping();
         return new Result().setSuccess(true).setData(list);
+    }
+
+    @RequestMapping("/test")
+    public Result test() {
+        System.out.println("123456");
+        String s = telnetUtil.sendCommand("telnet 172.16.0.2");
+        telnetUtil.sendCommand("123456");
+        return new Result().setSuccess(true).setData(s);
     }
 }

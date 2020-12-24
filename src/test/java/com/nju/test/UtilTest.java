@@ -25,7 +25,7 @@ public class UtilTest {
     public void configTest() {
         // telnetUtil.connect();
         String[] commands = new String[]{
-                "ifconfig"
+                "enable"
         };
         telnetUtil.sendCommands(commands);
         System.out.println("test");

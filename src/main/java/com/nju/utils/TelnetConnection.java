@@ -14,7 +14,7 @@ public class TelnetConnection {
     private TelnetClient telnet = new TelnetClient();
     private InputStream in;
     private PrintStream out;
-    private char prompt = '$';
+    private char prompt = '>';
 
     /**
      * 普通用户登录
@@ -24,14 +24,15 @@ public class TelnetConnection {
      * @param user
      * @param password
      */
-    public TelnetConnection(String ip, int port, String user, String password) {
+    public TelnetConnection(String ip, int port, String user, String password, String enablePassword) {
         try {
             telnet.connect(ip, port);
             in = telnet.getInputStream();
             out = new PrintStream(telnet.getOutputStream());
             // 根据root用户设置结束符
-            this.prompt = user.equals("root") ? '#' : '$';
-            login(user, password);
+            this.prompt = user.equals("root") ? '#' : '>';
+            System.out.println(this.prompt);
+            login(user, password, enablePassword);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -43,12 +44,12 @@ public class TelnetConnection {
      * @param user
      * @param password
      */
-    public void login(String user, String password) {
-        readUntil("login:");
-        write(user);
+    public void login(String user, String password, String enablePassword) {
         readUntil("Password:");
         write(password);
-        readUntil(prompt + " ");
+        write("enable");
+        readUntil("Password:");
+        write(enablePassword);
     }
 
     /**
@@ -100,7 +101,9 @@ public class TelnetConnection {
     public String sendCommand(String command) {
         try {
             write(command);
-            return readUntil(prompt + " ");
+//            return readUntil(prompt + " ");
+            return readUntil(prompt + "");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,7 +128,8 @@ public class TelnetConnection {
             int port = 23;
             String user = "root";
             String password = "19980925";
-            TelnetConnection telnet = new TelnetConnection(ip, port, user, password);
+            String enablePassword = "19980925";
+            TelnetConnection telnet = new TelnetConnection(ip, port, user, password,enablePassword);
             telnet.sendCommand("export LANG=en");
             String r1 = telnet.sendCommand("cd /home/project/");
             String r3 = telnet.sendCommand("ifconfig");
