@@ -64,10 +64,9 @@ public class RouterConfigServiceImpl implements RouterConfigService {
         for (int i = 0; i < router.length; i++) {
             telnetUtil.sendCommand("telnet " + router[i]);
             for (int j = 0; j < router.length; j++) {
-                telnetUtil.sendCommand("ping " + router[j]);
-//                if() {
-//                    list.add("Router "+i+"与Router "+j+"不通");
-//                }
+                if (!telnetUtil.sendCommand("ping " + router[j]).contains("100 percent")) {
+                    list.add("Router " + i + "与Router " + j + "不通");
+                }
             }
         }
         if (list.size() == 0) {

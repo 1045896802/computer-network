@@ -35,11 +35,13 @@ public class RouterConfigController {
 //        Boolean b = routerConfigService.routerConfig(config);
 //        return new Result().setSuccess(b);
         System.out.println(config);
+        System.out.println("222");
         return new Result().setData(config);
     }
 
     @RequestMapping("/ping")
     public Result ping() {
+        System.out.println("123456");
         List<String> list = routerConfigService.ping();
         return new Result().setSuccess(true).setData(list);
     }
