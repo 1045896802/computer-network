@@ -1,15 +1,15 @@
 package com.nju.utils;
 
-/**
- * @author Maxyu
- * @date 2020/12/17 15:45
- */
 
 import java.io.InputStream;
 import java.io.PrintStream;
 
 import org.apache.commons.net.telnet.TelnetClient;
 
+/**
+ * @author Maxyu
+ * @date 2020/12/17 15:45
+ */
 public class TelnetConnection {
     private TelnetClient telnet = new TelnetClient();
     private InputStream in;
@@ -43,13 +43,19 @@ public class TelnetConnection {
      *
      * @param user
      * @param password
+     * @param enablePassword
      */
     public void login(String user, String password, String enablePassword) {
+        readUntil("login:");
+        write(user);
         readUntil("Password:");
         write(password);
-        write("enable");
-        readUntil("Password:");
-        write(enablePassword);
+        readUntil(prompt + " ");
+        //        readUntil("Password:");
+//        write(password);
+//        write("enable");
+//        readUntil("Password:");
+//        write(enablePassword);
     }
 
     /**
@@ -101,8 +107,8 @@ public class TelnetConnection {
     public String sendCommand(String command) {
         try {
             write(command);
-//            return readUntil(prompt + " ");
-            return readUntil(prompt + "");
+            return readUntil(prompt + " ");
+            //return readUntil(prompt + "");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,14 +135,14 @@ public class TelnetConnection {
             String user = "root";
             String password = "19980925";
             String enablePassword = "19980925";
-            TelnetConnection telnet = new TelnetConnection(ip, port, user, password,enablePassword);
+            TelnetConnection telnet = new TelnetConnection(ip, port, user, password, enablePassword);
             telnet.sendCommand("export LANG=en");
             String r1 = telnet.sendCommand("cd /home/project/");
             String r3 = telnet.sendCommand("ifconfig");
             System.out.println("显示结果");
-            System.out.println(r1);
-            System.out.println();
-            System.out.println(r3);
+            System.out.println("r1" + r1);
+            System.out.println("???");
+            System.out.println("r3" + r3);
             telnet.disconnect();
         } catch (Exception e) {
             e.printStackTrace();

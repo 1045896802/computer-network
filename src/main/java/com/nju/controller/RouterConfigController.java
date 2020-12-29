@@ -1,13 +1,14 @@
 package com.nju.controller;
 
-import com.nju.entity.Config;
+import com.nju.entity.RouterInterface;
+import com.nju.entity.StaticRouter;
 import com.nju.entity.Result;
 import com.nju.service.RouterConfigService;
-import com.nju.utils.TelnetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,42 +19,38 @@ import java.util.List;
 public class RouterConfigController {
     @Autowired
     RouterConfigService routerConfigService;
-    @Autowired
-    TelnetUtil telnetUtil;
 
     @RequestMapping("/getConfig")
     public Result getConfig(String router) {
-        List<Config> list = routerConfigService.getConfigByRouter(router);
+        List<StaticRouter> list = routerConfigService.getConfigByRouter(router);
         return new Result().setSuccess(true).setData(list);
     }
 
-    @RequestMapping("/getAllConfig")
-    public Result getAllConfig() {
-        List<Config> list = routerConfigService.getAllConfig();
+    @RequestMapping("/init")
+    public Result init() {
+        List<StaticRouter> list = routerConfigService.getAllConfig();
         return new Result().setSuccess(true).setData(list);
     }
 
-    @RequestMapping("/routerConfig")
-    public Result routerConfig(Config config) {
-//        Boolean b = routerConfigService.routerConfig(config);
-//        return new Result().setSuccess(b);
-        System.out.println(config);
-        System.out.println("222");
-        return new Result().setData(config);
+    @RequestMapping("/static")
+    public Result staticRouterConfig(StaticRouter staticRouter) {
+        System.out.println(staticRouter);
+        Boolean b = routerConfigService.staticRouterConfig(staticRouter);
+        return new Result().setSuccess(b);
+    }
+
+    @RequestMapping("/interface")
+    public Result routerInterfaceConfig(RouterInterface routerInterface) {
+        System.out.println(routerInterface);
+        Boolean b = routerConfigService.routerInterfaceConfig(routerInterface);
+        return new Result().setSuccess(b);
     }
 
     @RequestMapping("/ping")
     public Result ping() {
-        System.out.println("123456");
-        List<String> list = routerConfigService.ping();
+        System.out.println("in ping");
+        //List<String> list = routerConfigService.ping();
+        List<String> list = new ArrayList<>();list.add("111");
         return new Result().setSuccess(true).setData(list);
-    }
-
-    @RequestMapping("/test")
-    public Result test() {
-        System.out.println("123456");
-        String s = telnetUtil.sendCommand("telnet 172.16.0.2");
-        telnetUtil.sendCommand("123456");
-        return new Result().setSuccess(true).setData(s);
     }
 }

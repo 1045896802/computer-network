@@ -1,6 +1,7 @@
 package com.nju.service;
 
-import com.nju.entity.Config;
+import com.nju.entity.RouterInterface;
+import com.nju.entity.StaticRouter;
 
 import java.util.List;
 
@@ -26,12 +27,20 @@ public interface RouterConfigService {
 
 
     /**
-     * 配置路由器
+     * 配置路由器静态路由
      *
-     * @param config
+     * @param staticRouter
      * @return
      */
-    Boolean routerConfig(Config config);
+    Boolean staticRouterConfig(StaticRouter staticRouter);
+
+    /**
+     * 配置路由器端口
+     *
+     * @param routerInterface
+     * @return
+     */
+    Boolean routerInterfaceConfig(RouterInterface routerInterface);
 
     /**
      * 测试连通性

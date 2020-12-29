@@ -1,7 +1,9 @@
 package com.nju.service.impl;
 
-import com.nju.dao.ConfigDao;
-import com.nju.entity.Config;
+import com.nju.dao.RouterInterfaceDao;
+import com.nju.dao.StaticRouterDao;
+import com.nju.entity.RouterInterface;
+import com.nju.entity.StaticRouter;
 import com.nju.service.RouterConfigService;
 import com.nju.utils.TelnetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,10 @@ import java.util.List;
 @Service
 public class RouterConfigServiceImpl implements RouterConfigService {
     @Autowired
-    ConfigDao configDao;
+    StaticRouterDao staticRouterDao;
+    @Autowired
+    RouterInterfaceDao routerInterfaceDao;
+
     @Autowired
     TelnetUtil telnetUtil;
 
@@ -27,44 +32,46 @@ public class RouterConfigServiceImpl implements RouterConfigService {
 
     @Override
     public List getConfigByRouter(String router) {
-        List<Config> list = configDao.getConfigByRouter(router);
+        List<StaticRouter> list = staticRouterDao.getStaticRouterByRouter(router);
         return list;
     }
 
     @Override
     public List getAllConfig() {
-        List<Config> list = configDao.getAllConfig();
+        List<StaticRouter> list = staticRouterDao.getAllStaticRouter();
         return list;
     }
 
     @Override
-    public Boolean routerConfig(Config config) {
+    public Boolean staticRouterConfig(StaticRouter staticRouter) {
         String[] commands = new String[]{
-                "telnet " + config.getRouter(),
-                "enable",
                 "conf t",
-                "ip route " + config.getIp() + " " + config.getMask() + " " + config.getNextHop()
+                "ip route " + staticRouter.getIp() + " " + staticRouter.getMask() + " " + staticRouter.getNextHop()
         };
-        telnetUtil.sendCommands(commands);
+        telnetUtil.sendCommands(staticRouter.getRouter(), commands);
+        staticRouterDao.insert(staticRouter);
+        return true;
+    }
+
+    @Override
+    public Boolean routerInterfaceConfig(RouterInterface routerInterface) {
+        String[] commands = new String[]{
+                "conf t",
+                "int " + routerInterface.getPort(),
+                "ip add " + routerInterface.getIp() + " " + routerInterface.getMask(),
+                "no shutdown"
+        };
+        telnetUtil.sendCommands(routerInterface.getRouter(), commands);
+        routerInterfaceDao.insert(routerInterface);
         return true;
     }
 
     @Override
     public List ping() {
-        //String[] commands=new String[router.length];
         List<String> list = new ArrayList<>();
-
-        //router1测试
-//        commands = new String[]{
-//                "telnet " + router1,
-//                "ping " + router2,
-//                "ping " + router3
-//        };
-
         for (int i = 0; i < router.length; i++) {
-            telnetUtil.sendCommand("telnet " + router[i]);
             for (int j = 0; j < router.length; j++) {
-                if (!telnetUtil.sendCommand("ping " + router[j]).contains("100 percent")) {
+                if (!telnetUtil.sendCommand("router" + (i + 1), "ping " + router[j]).contains("100 percent")) {
                     list.add("Router " + i + "与Router " + j + "不通");
                 }
             }

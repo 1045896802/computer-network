@@ -11,19 +11,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Config {
+public class StaticRouter {
     /**
      * 路由器名称
      */
     String router;
-    /**
-     * 路由器密码
-     */
-    String routerPwd;
-    /**
-     * 路由器enable密码
-     */
-    String routerEnablePwd;
     /**
      * 配置的ip地址
      */

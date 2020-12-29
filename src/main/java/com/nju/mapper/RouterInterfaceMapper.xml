@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nju.dao.RouterInterfaceDao">
+    <resultMap id="BaseResultMap" type="com.nju.entity.RouterInterface">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="router" jdbcType="VARCHAR" property="router"/>
+        <result column="port" jdbcType="VARCHAR" property="port"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="mask" jdbcType="VARCHAR" property="mask"/>
+    </resultMap>
+
+    <select id="getRouterInterfaceByRouter" resultType="RouterInterface" parameterType="String">
+        select * from routerInterface where router = #{router}
+    </select>
+
+    <select id="getAllRouterInterface" resultType="RouterInterface">
+        select * from routerInterface
+    </select>
+
+    <insert id="insert" parameterType="RouterInterface">
+	    INSERT INTO RouterInterface(
+	    router,port,ip,mask
+	    )VALUES (
+	      #{router},
+	      #{port},
+	      #{ip},
+	      #{mask}
+	    )
+	</insert>
+</mapper>

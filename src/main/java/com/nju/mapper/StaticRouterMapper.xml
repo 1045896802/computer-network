@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nju.dao.StaticRouterDao">
+    <resultMap id="BaseResultMap" type="com.nju.entity.StaticRouter">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="router" jdbcType="VARCHAR" property="router"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="mask" jdbcType="VARCHAR" property="mask"/>
+        <result column="nextHop" jdbcType="VARCHAR" property="nextHop"/>
+    </resultMap>
+
+    <select id="getStaticRouterByRouter" resultType="StaticRouter" parameterType="String">
+        select * from staticRouter where router = #{router}
+    </select>
+
+    <select id="getAllStaticRouter" resultType="StaticRouter">
+        select * from staticRouter
+    </select>
+
+    <insert id="insert" parameterType="StaticRouter">
+	    INSERT INTO StaticRouter(
+	    router,ip,mask,nextHop
+	    )VALUES (
+	      #{router},
+	      #{ip},
+	      #{mask},
+	      #{nextHop}
+	    )
+	</insert>
+</mapper>
