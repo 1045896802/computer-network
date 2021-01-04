@@ -19,10 +19,10 @@ import java.util.List;
  */
 @Service
 public class RouterConfigServiceImpl implements RouterConfigService {
-    @Autowired
-    StaticRouterDao staticRouterDao;
-    @Autowired
-    RouterInterfaceDao routerInterfaceDao;
+    //@Autowired
+    //StaticRouterDao staticRouterDao;
+    //@Autowired
+    //RouterInterfaceDao routerInterfaceDao;
 
     @Autowired
     TelnetUtil telnetUtil;
@@ -32,13 +32,15 @@ public class RouterConfigServiceImpl implements RouterConfigService {
 
     @Override
     public List getConfigByRouter(String router) {
-        List<StaticRouter> list = staticRouterDao.getStaticRouterByRouter(router);
+        //List<StaticRouter> list = staticRouterDao.getStaticRouterByRouter(router);
+        List<StaticRouter> list=new ArrayList<>();
         return list;
     }
 
     @Override
     public List getAllConfig() {
-        List<StaticRouter> list = staticRouterDao.getAllStaticRouter();
+        //List<StaticRouter> list = staticRouterDao.getAllStaticRouter();
+        List<StaticRouter> list=new ArrayList<>();
         return list;
     }
 
@@ -49,7 +51,7 @@ public class RouterConfigServiceImpl implements RouterConfigService {
                 "ip route " + staticRouter.getIp() + " " + staticRouter.getMask() + " " + staticRouter.getNextHop()
         };
         telnetUtil.sendCommands(staticRouter.getRouter(), commands);
-        staticRouterDao.insert(staticRouter);
+       // staticRouterDao.insert(staticRouter);
         return true;
     }
 
@@ -62,7 +64,7 @@ public class RouterConfigServiceImpl implements RouterConfigService {
                 "no shutdown"
         };
         telnetUtil.sendCommands(routerInterface.getRouter(), commands);
-        routerInterfaceDao.insert(routerInterface);
+        //routerInterfaceDao.insert(routerInterface);
         return true;
     }
 
@@ -72,7 +74,7 @@ public class RouterConfigServiceImpl implements RouterConfigService {
         for (int i = 0; i < router.length; i++) {
             for (int j = 0; j < router.length; j++) {
                 if (!telnetUtil.sendCommand("router" + (i + 1), "ping " + router[j]).contains("100 percent")) {
-                    list.add("Router " + i + "与Router " + j + "不通");
+                    list.add("Router " + (i+1) + "与Router " + (j+1) + "不通");
                 }
             }
         }

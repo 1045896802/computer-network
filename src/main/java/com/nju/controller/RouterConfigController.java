@@ -36,6 +36,7 @@ public class RouterConfigController {
     public Result staticRouterConfig(StaticRouter staticRouter) {
         System.out.println(staticRouter);
         Boolean b = routerConfigService.staticRouterConfig(staticRouter);
+        //Boolean b = true;
         return new Result().setSuccess(b);
     }
 
@@ -48,9 +49,11 @@ public class RouterConfigController {
 
     @RequestMapping("/ping")
     public Result ping() {
-        System.out.println("in ping");
-        //List<String> list = routerConfigService.ping();
-        List<String> list = new ArrayList<>();list.add("111");
+        List<String> list = routerConfigService.ping();
+//        List<String> list = new ArrayList<>();
+//        list.add("111");
+//        list.add("222");
+        System.out.println(list);
         return new Result().setSuccess(true).setData(list);
     }
 }

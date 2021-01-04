@@ -1,6 +1,5 @@
 package com.nju.utils;
 
-
 import java.io.InputStream;
 import java.io.PrintStream;
 
@@ -46,16 +45,20 @@ public class TelnetConnection {
      * @param enablePassword
      */
     public void login(String user, String password, String enablePassword) {
-        readUntil("login:");
-        write(user);
+//        readUntil("login:");
+//        write(user);
+//        readUntil("Password:");
+//        write(password);
+//        readUntil(prompt + " ");
         readUntil("Password:");
         write(password);
-        readUntil(prompt + " ");
-        //        readUntil("Password:");
-//        write(password);
-//        write("enable");
-//        readUntil("Password:");
-//        write(enablePassword);
+        write("enable");
+        readUntil("Password:");
+        write(enablePassword);
+        this.prompt = '#';
+        //System.out.println();
+        // System.out.println("ip:"+sendCommand("")+sendCommand("show ip route"));
+        //System.out.println();
     }
 
     /**
@@ -107,9 +110,8 @@ public class TelnetConnection {
     public String sendCommand(String command) {
         try {
             write(command);
-            return readUntil(prompt + " ");
-            //return readUntil(prompt + "");
-
+            //return readUntil(prompt + " ");
+            return readUntil(prompt + "");
         } catch (Exception e) {
             e.printStackTrace();
         }
