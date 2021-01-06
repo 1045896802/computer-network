@@ -11,36 +11,18 @@ import java.util.List;
  */
 public interface RouterConfigService {
     /**
-     * 通过路由器名获得配置
-     *
-     * @param router
-     * @return
-     */
-    List getConfigByRouter(String router);
-
-    /**
-     * 获得所有路由器配置
-     *
-     * @return
-     */
-    List getAllConfig();
-
-
-    /**
      * 配置路由器静态路由
      *
-     * @param staticRouter
      * @return
      */
-    Boolean staticRouterConfig(StaticRouter staticRouter);
+    Boolean staticRouterConfig();
 
     /**
      * 配置路由器端口
      *
-     * @param routerInterface
      * @return
      */
-    Boolean routerInterfaceConfig(RouterInterface routerInterface);
+    Boolean routerInterfaceConfig();
 
     /**
      * 测试连通性

@@ -1,11 +1,8 @@
 package com.nju.service.impl;
 
-import com.nju.dao.RouterInterfaceDao;
-import com.nju.dao.StaticRouterDao;
-import com.nju.entity.RouterInterface;
-import com.nju.entity.StaticRouter;
 import com.nju.service.RouterConfigService;
 import com.nju.utils.TelnetUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,53 +15,51 @@ import java.util.List;
  * @date 2020/12/22 19:52
  */
 @Service
+@Slf4j
 public class RouterConfigServiceImpl implements RouterConfigService {
-    //@Autowired
-    //StaticRouterDao staticRouterDao;
-    //@Autowired
-    //RouterInterfaceDao routerInterfaceDao;
-
     @Autowired
     TelnetUtil telnetUtil;
 
     @Value("#{'${router.ip:}'.split(',')}")
     private String[] router;
 
-    @Override
-    public List getConfigByRouter(String router) {
-        //List<StaticRouter> list = staticRouterDao.getStaticRouterByRouter(router);
-        List<StaticRouter> list=new ArrayList<>();
-        return list;
-    }
+    @Value("#{'${routerInterface.router1:}'.split(',')}")
+    private String[] interface1;
+
+    @Value("#{'${routerInterface.router2:}'.split(',')}")
+    private String[] interface2;
+
+    @Value("#{'${routerInterface.router3:}'.split(',')}")
+    private String[] interface3;
+
+    @Value("#{'${staticRouter.router1:}'.split(',')}")
+    private String[] static1;
+
+    @Value("#{'${staticRouter.router2:}'.split(',')}")
+    private String[] static2;
+
+    @Value("#{'${staticRouter.router3:}'.split(',')}")
+    private String[] static3;
 
     @Override
-    public List getAllConfig() {
-        //List<StaticRouter> list = staticRouterDao.getAllStaticRouter();
-        List<StaticRouter> list=new ArrayList<>();
-        return list;
-    }
-
-    @Override
-    public Boolean staticRouterConfig(StaticRouter staticRouter) {
-        String[] commands = new String[]{
-                "conf t",
-                "ip route " + staticRouter.getIp() + " " + staticRouter.getMask() + " " + staticRouter.getNextHop()
-        };
-        telnetUtil.sendCommands(staticRouter.getRouter(), commands);
-       // staticRouterDao.insert(staticRouter);
+    public Boolean staticRouterConfig() {
+        log.info("配置route1静态路由");
+        telnetUtil.sendCommandsByRouter1(static1);
+        log.info("配置route2静态路由");
+        telnetUtil.sendCommandsByRouter2(static2);
+        log.info("配置route3静态路由");
+        telnetUtil.sendCommandsByRouter3(static3);
         return true;
     }
 
     @Override
-    public Boolean routerInterfaceConfig(RouterInterface routerInterface) {
-        String[] commands = new String[]{
-                "conf t",
-                "int " + routerInterface.getPort(),
-                "ip add " + routerInterface.getIp() + " " + routerInterface.getMask(),
-                "no shutdown"
-        };
-        telnetUtil.sendCommands(routerInterface.getRouter(), commands);
-        //routerInterfaceDao.insert(routerInterface);
+    public Boolean routerInterfaceConfig() {
+        log.info("配置route1端口");
+        telnetUtil.sendCommandsByRouter1(interface1);
+        log.info("配置route2端口");
+        telnetUtil.sendCommandsByRouter2(interface2);
+        log.info("配置route3端口");
+        telnetUtil.sendCommandsByRouter3(interface3);
         return true;
     }
 
@@ -74,7 +69,7 @@ public class RouterConfigServiceImpl implements RouterConfigService {
         for (int i = 0; i < router.length; i++) {
             for (int j = 0; j < router.length; j++) {
                 if (!telnetUtil.sendCommand("router" + (i + 1), "ping " + router[j]).contains("100 percent")) {
-                    list.add("Router " + (i+1) + "与Router " + (j+1) + "不通");
+                    list.add("Router " + (i + 1) + "与Router " + (j + 1) + "不通");
                 }
             }
         }

@@ -10,8 +10,8 @@ spring:
 
   resources:
     static-locations:
-     - classpath:/templates/
-     - classpath:/static/
+      - classpath:/templates/
+      - classpath:/static/
 
 #数据库地址
 datasource:
@@ -45,19 +45,6 @@ switch:
   enablePassword: 123456
 
 #路由器的配置
-#router:
-#  router1:
-#    ip: 172.16.0.2
-#    serial0: 172.17.0.1
-#  router2:
-#    ip: 172.16.0.3
-#    serial0: 172.17.0.2
-#    serial1: 172.18.0.1
-#  router3:
-#    ip: 172.16.0.4
-#    serial1: 172.18.0.2
-
-#路由器的配置
 router:
   #ip: 172.16.0.2,172.16.0.3,172.16.0.4
   ip: 172.14.0.1,172.15.0.1,172.16.0.1
@@ -66,6 +53,47 @@ router:
   password: 123456
   enablePassword: 123456
 
+#路由器端口口的配置命令
+routerInterface:
+  router1:
+    conf t,
+    int s0/0/0,
+    ip add 172.16.0.1 255.255.0.0,
+    no shutdown,
+    int s0/0/1,
+    ip add 172.16.0.1 255.255.0.0,
+    no shutdown,
+    exit
+  router2:
+    conf t,
+    int s0/0/0,
+    ip add 172.16.0.1 255.255.0.0,
+    no shutdown,
+    int s0/0/1,
+    ip add 172.16.0.1 255.255.0.0,
+    no shutdown,
+    exit
+  router3:
+    conf t,
+    int s0/0/0,
+    ip add 172.16.0.1 255.255.0.0,
+    no shutdown,
+    int s0/0/1,
+    ip add 172.16.0.1 255.255.0.0,
+    no shutdown,
+    exit
+
+#静态路由的配置命令
+staticRouter:
+  router1:
+    conf t,
+    ip route 172.16.0.0 255.255.0.0 172.16.0.1
+  router2:
+    conf t,
+    ip route 172.16.0.0 255.255.0.0 172.16.0.1
+  router3:
+    conf t,
+    ip route 172.16.0.0 255.255.0.0 172.16.0.1
 
 
 

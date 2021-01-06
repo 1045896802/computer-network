@@ -39,10 +39,6 @@ public class TelnetUtil {
             for (int i = 0; i < ip.length; i++) {
                 System.out.println(ip[i] + " " + port + " " + user + " " + password + " " + enablePassword);
                 telnet[i] = new TelnetConnection(ip[i], port, user, password, enablePassword);
-               // System.out.println("R"+ telnet[i].sendCommand("show ip route"));
-                //telnet[i].sendCommand("enable");
-                //telnet[i].readUntil("enable");
-                //telnet[i].write(enablePassword);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,6 +63,48 @@ public class TelnetUtil {
             s = telnet[2].sendCommand(command);
         }
         System.out.println(s);
+        return s;
+    }
+
+    public String sendCommandByRouter1(String command) {
+        String s = "";
+        telnet[0].sendCommand(command);
+        s = telnet[0].sendCommand(command);
+        return s;
+    }
+
+    public void sendCommandsByRouter1(String[] commands) {
+        for (String command : commands) {
+            System.out.println(sendCommandByRouter1(command));
+            System.out.println();
+        }
+    }
+
+    public void sendCommandsByRouter2(String[] commands) {
+        for (String command : commands) {
+            System.out.println(sendCommandByRouter2(command));
+            System.out.println();
+        }
+    }
+
+    public void sendCommandsByRouter3(String[] commands) {
+        for (String command : commands) {
+            System.out.println(sendCommandByRouter3(command));
+            System.out.println();
+        }
+    }
+
+    public String sendCommandByRouter2(String command) {
+        String s = "";
+        telnet[1].sendCommand(command);
+        s = telnet[1].sendCommand(command);
+        return s;
+    }
+
+    public String sendCommandByRouter3(String command) {
+        String s = "";
+        telnet[2].sendCommand(command);
+        s = telnet[2].sendCommand(command);
         return s;
     }
 
