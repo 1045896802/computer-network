@@ -35,18 +35,24 @@ public class RouterConfigServiceImpl implements RouterConfigService {
     @Value("#{'${staticRouter.router1:}'.split(',')}")
     private String[] static1;
 
-    @Value("#{'${staticRouter.router2:}'.split(',')}")
-    private String[] static2;
+//    @Value("#{'${staticRouter.router2:}'.split(',')}")
+//    private String[] static2;
 
     @Value("#{'${staticRouter.router3:}'.split(',')}")
     private String[] static3;
+
+    @Value("${ping.router1}")
+    private String ping1;
+
+    @Value("${ping.router3}")
+    private String ping3;
 
     @Override
     public Boolean staticRouterConfig() {
         log.info("配置route1静态路由");
         telnetUtil.sendCommandsByRouter1(static1);
-        log.info("配置route2静态路由");
-        telnetUtil.sendCommandsByRouter2(static2);
+//        log.info("配置route2静态路由");
+//        telnetUtil.sendCommandsByRouter2(static2);
         log.info("配置route3静态路由");
         telnetUtil.sendCommandsByRouter3(static3);
         return true;
@@ -65,13 +71,25 @@ public class RouterConfigServiceImpl implements RouterConfigService {
 
     @Override
     public List ping() {
+//        List<String> list = new ArrayList<>();
+//        for (int i = 0; i < router.length; i++) {
+//            for (int j = 0; j < router.length; j++) {
+//                if (!telnetUtil.sendCommand("router" + (i + 1), "ping " + router[j]).contains("100 percent")) {
+//                    list.add("Router " + (i + 1) + "与Router " + (j + 1) + "不通");
+//                }
+//            }
+//        }
+//        if (list.size() == 0) {
+//            list.add("ping测试通过");
+//        }
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < router.length; i++) {
-            for (int j = 0; j < router.length; j++) {
-                if (!telnetUtil.sendCommand("router" + (i + 1), "ping " + router[j]).contains("100 percent")) {
-                    list.add("Router " + (i + 1) + "与Router " + (j + 1) + "不通");
-                }
-            }
+        log.info("\nRouter1 ping Router3...");
+        if (telnetUtil.sendCommandByRouter1(ping3).contains("success rate is 0 percent")) {
+            list.add("Router 1与Router 3" + "不通");
+        }
+        log.info("\nRouter3 ping Router1...");
+        if (telnetUtil.sendCommandByRouter3(ping1).contains("success rate is 0 percent")) {
+            list.add("Router 1与Router 3" + "不通");
         }
         if (list.size() == 0) {
             list.add("ping测试通过");

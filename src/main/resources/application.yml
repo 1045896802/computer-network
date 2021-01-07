@@ -49,40 +49,33 @@ switch:
 
 #路由器的配置
 router:
-  #ip: 172.16.0.2,172.16.0.3,172.16.0.4
-  ip: 172.14.0.1,172.15.0.1,172.16.0.1
+  ip: 172.16.0.1,172.16.0.2,172.16.0.3
   port: 23
   user: user
   password: 123456
   enablePassword: 123456
 
-#路由器端口口的配置命令
+#路由器端口的配置命令
 routerInterface:
   router1:
     conf t,
     int s0/0/0,
-    ip add 172.16.0.1 255.255.0.0,
-    no shutdown,
-    int s0/0/1,
-    ip add 172.16.0.1 255.255.0.0,
+    ip add 172.17.0.1 255.255.255.0,
     no shutdown,
     exit
   router2:
     conf t,
-    int s0/0/0,
-    ip add 172.16.0.1 255.255.0.0,
-    no shutdown,
     int s0/0/1,
-    ip add 172.16.0.1 255.255.0.0,
+    ip add 172.18.0.1 255.255.255.0,
+    no shutdown,
+    int s0/0/0,
+    ip add 172.17.0.2 255.255.255.0,
     no shutdown,
     exit
   router3:
     conf t,
     int s0/0/0,
-    ip add 172.16.0.1 255.255.0.0,
-    no shutdown,
-    int s0/0/1,
-    ip add 172.16.0.1 255.255.0.0,
+    ip add 172.18.0.2 255.255.255.0,
     no shutdown,
     exit
 
@@ -90,10 +83,21 @@ routerInterface:
 staticRouter:
   router1:
     conf t,
-    ip route 172.16.0.0 255.255.0.0 172.16.0.1
-  router2:
-    conf t,
-    ip route 172.16.0.0 255.255.0.0 172.16.0.1
+    ip route 172.18.0.0 255.255.255.0 s0/0/0
+#  router2:
+#    conf t,
+#    ip route 172.16.0.0 255.255.0.0 172.16.0.1
   router3:
     conf t,
-    ip route 172.16.0.0 255.255.0.0 172.16.0.1
+    ip route 172.17.0.0 255.255.255.0 s0/0/0
+
+
+#ping的配置命令
+ping:
+  router1:
+    ping 172.18.0.2
+  #  router2:
+  #    conf t,
+  #    ip route 172.16.0.0 255.255.0.0 172.16.0.1
+  router3:
+    ping 172.17.0.1
