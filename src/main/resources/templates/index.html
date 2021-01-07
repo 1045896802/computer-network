@@ -1,4 +1,4 @@
-<!doctype html >
+<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -25,62 +25,13 @@
 
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                type: "get",
-                data: "",
-                url: "/init",
-                success: function (data) {
-                    var result = JSON.parse(data);
-                    alert(result);
-                },
-                error: function () {
-                    alert("未连接");
-                }
-            });
-        })
-    </script>
-
-
     <script language="javascript">
         function pc(element) {
-            name = element.id;
+            var name = element.id;
             document.getElementById("device").value = name;
-            return false;
-        }
-    </script>
-
-    <script language="javascript">
-        function set() {
-            var device = document.getElementById("device").value;
-            var nextHop = document.getElementById("nextHop").value;
-            var ip = document.getElementById("ip").value;
-            var subnet = document.getElementById("subnet").value;
-            alert("device"+device); alert("nextHop"+nextHop);
-            alert("ip"+ip);alert("subnet"+subnet);
-            $.ajax({
-                type: "post",
-                data: {
-                    "router": device,
-                    "ip": ip,
-                    "mask": subnet,
-                    "nextHop": nextHop
-                },
-                url: "/static",
-                success: function () {
-                    alert("保存成功");
-                },
-
-                error: function () {
-                    alert("无法连接，保存失败");
-                }
-
-            });
 
             return false;
         }
-
     </script>
 
     <script>
@@ -90,10 +41,10 @@
                 url: "/ping",
                 data: "",
                 dataType: "json",
-                success: function (msg) {
+                success: function (data) {
                     alert("PING成功");
+//					var result=$.parseJSON(data).data;
                     var result = msg.data;
-                    alert(result);
                     var str = "";
                     for (var i = 0; i < result.length; i++) {
                         str += result[i] + "\n";
@@ -107,6 +58,43 @@
             return false;
         }
     </script>
+
+    <script>
+        function interface() {
+            $.ajax({
+                type: "post",
+                url: "/interface",
+                data: "",
+                dataType: "json",
+                success: function (data) {
+                    alert("配置成功");
+                },
+                error: function () {
+                    alert("无法连接，配置失败");
+                }
+            });
+            return false;
+        }
+    </script>
+
+    <script>
+        function static() {
+            $.ajax({
+                type: "post",
+                url: "/static",
+                data: "",
+                dataType: "json",
+                success: function (data) {
+                    alert("配置成功");
+                },
+                error: function () {
+                    alert("无法连接，配置失败");
+                }
+            });
+            return false;
+        }
+    </script>
+
 </head>
 
 <body>
@@ -120,20 +108,25 @@
         <p align="center">
             <img src="img/line1.jpg" width="17" height="99" alt=""/></p>
         <p align="center">
-            <input name="swithcer" type="image" disabled="disabled" id="swithcer" onClick="pc(this)" src="img/switcher.jpg"
+            <input name="swithcer" type="image" disabled="disabled" id="swithcer" onClick="pc(this)"
+                   src="img/switcher.jpg"
                    width="50" height="50">
         </p>
 
         <p align="center">
             <img src="img/lline.jpg" width="87" height="98" alt="" id="router1s"/> <img src="img/bline.jpg" width="15"
-                                                                                                  height="99" alt="" id="router2s"/>
+                                                                                        height="99" alt=""
+                                                                                        id="router2s"/>
             <img src="img/rline.jpg" width="87" height="98" alt="" id="router3s"/></p>
         <p align="center">
-            <input name="router1" type="image" id="router1" src="img/router.jpg" width="50" height="50" onClick="pc(this)">
+            <input name="router1" type="image" id="router1" src="img/router.jpg" width="50" height="50"
+                   onClick="pc(this)">
             <img src="img/vline.jpg" width="61" height="11" alt="" id="router12e"/>
-            <input name="router2" type="image" id="router2" src="img/router.jpg" width="50" height="50" onClick="pc(this)">
+            <input name="router2" type="image" id="router2" src="img/router.jpg" width="50" height="50"
+                   onClick="pc(this)">
             <img src="img/vline.jpg" width="61" height="11" alt="" id="router23e"/>
-            <input name="router3" type="image" id="router3" src="img/router.jpg" width="50" height="50" onClick="pc(this)">
+            <input name="router3" type="image" id="router3" src="img/router.jpg" width="50" height="50"
+                   onClick="pc(this)">
         </p>
         <p align="center">
             <input type="button" name="ping" value="PING" style="font-size: 25px" onClick="ping()">
@@ -146,31 +139,16 @@
 
     <section id="left">
         <form style="font-size: 20px">
-            <div>
-                设备名称：
-                <input type="text" id="device" readonly="readonly">
-            </div>
-
-            <p></p>
-            <div>
-                IP ：
-                <input type="text" id="ip"></div>
-            <div>
-                子网 ：
-                <input type="text" id="subnet">
-
-            </div>
-            <div>
-                下一跳 ：
-                <input type="text" id="nextHop">
-
-            </div>
-            <div>
-                <input type="button" name="save" value="保存" onClick="set()"><input type="reset">
-            </div>
+            <p>
+                <input type="button" style="font-size: 25px" value="配置接口" onClick="interface()">
+            </p>
+            <p>
+                <input type="button" name="button" id="button" value="配置静态路由" style="font-size: 25px"
+                       onClick="static()">
+            </p>
         </form>
-
     </section>
 </div>
 </body>
+
 </html>

@@ -1,3 +1,6 @@
+server:
+  port: 80
+
 spring:
   datasource: #数据库配置
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -94,11 +97,3 @@ staticRouter:
   router3:
     conf t,
     ip route 172.16.0.0 255.255.0.0 172.16.0.1
-
-
-
-
-
-
-
-
