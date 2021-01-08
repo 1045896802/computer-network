@@ -21,25 +21,25 @@ public class RouterConfigController {
     @RequestMapping("/static")
     public Result staticRouterConfig() {
         Boolean b = routerConfigService.staticRouterConfig();
-        return new Result().setSuccess(b);
+        return new Result().setSuccess(b).setData("配置静态路由成功");
     }
 
     @RequestMapping("/static/router{id}")
     public Result staticRouterConfig(@PathVariable("id") Integer id) {
         Boolean b = routerConfigService.staticRouterConfig(id);
-        return new Result().setSuccess(b);
+        return new Result().setSuccess(b).setData("配置router" + id + "静态路由成功");
     }
 
     @RequestMapping("/interface")
     public Result routerInterfaceConfig() {
         Boolean b = routerConfigService.routerInterfaceConfig();
-        return new Result().setSuccess(b);
+        return new Result().setSuccess(b).setData("配置路由器端口成功");
     }
 
     @RequestMapping("/interface/router{id}")
     public Result routerInterfaceConfig(@PathVariable("id") Integer id) {
         Boolean b = routerConfigService.routerInterfaceConfig(id);
-        return new Result().setSuccess(b);
+        return new Result().setSuccess(b).setData("配置路由器router" + id + "端口成功");
     }
 
     @RequestMapping("/ping")
