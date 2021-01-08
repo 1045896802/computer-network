@@ -1,5 +1,6 @@
 package com.nju.test;
 
+import com.nju.utils.ConfigProperties;
 import com.nju.dao.RouterInterfaceDao;
 import com.nju.dao.StaticRouterDao;
 import com.nju.utils.TelnetUtil;
@@ -26,12 +27,16 @@ public class UtilTest {
 
     @Value("#{'${routerInterface.router1:}'.split(',')}")
     private String[] interface1;
-
+    //    @Value("${prefix.id}")
+//    public int[] idArray;
     @Value("#{'${routerInterface.router2:}'.split(',')}")
     private String[] interface2;
 
     @Value("#{'${routerInterface.router3:}'.split(',')}")
     private String[] interface3;
+
+//    @Value("${routerInterface.router}")
+//    private String[] interface21;
 
     @Value("#{'${staticRouter.router1:}'.split(',')}")
     private String[] static1;
@@ -82,7 +87,32 @@ public class UtilTest {
         for (String c : static3) {
             System.out.println(c);
         }
+//        for (int i : idArray) {
+//            System.out.println(i);
+//        }
         System.out.println("test");
+    }
+
+    @Autowired
+    ConfigProperties configProperties;
+
+    //    @Test
+//    public void test3() {
+//        System.out.println(configProperties.getInterests());
+//        for (Integer i :configProperties.getInterests())
+//            System.out.println(i);
+//    }
+    @Test
+    public void test3() {
+        for (int i = 0; i < configProperties.getInterfaceCommand().length; i++) {
+            System.out.println("第"+i+"个" + configProperties.getInterfaceCommand()[i]);
+        }
+        for (int i = 0; i < configProperties.getPingCommand().length; i++) {
+            System.out.println("第"+i+"个" + configProperties.getPingCommand()[i]);
+        }
+        for (int i = 0; i < configProperties.getStaticCommand().length; i++) {
+            System.out.println("第"+i+"个" + configProperties.getStaticCommand()[i]);
+        }
     }
 }
 
