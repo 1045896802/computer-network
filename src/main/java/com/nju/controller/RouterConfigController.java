@@ -3,6 +3,7 @@ package com.nju.controller;
 import com.nju.entity.Result;
 import com.nju.service.RouterConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +24,21 @@ public class RouterConfigController {
         return new Result().setSuccess(b);
     }
 
+    @RequestMapping("/static/router{id}")
+    public Result staticRouterConfig(@PathVariable("id") Integer id) {
+        Boolean b = routerConfigService.staticRouterConfig(id);
+        return new Result().setSuccess(b);
+    }
+
     @RequestMapping("/interface")
     public Result routerInterfaceConfig() {
         Boolean b = routerConfigService.routerInterfaceConfig();
+        return new Result().setSuccess(b);
+    }
+
+    @RequestMapping("/interface/router{id}")
+    public Result routerInterfaceConfig(@PathVariable("id") Integer id) {
+        Boolean b = routerConfigService.routerInterfaceConfig(id);
         return new Result().setSuccess(b);
     }
 
@@ -34,5 +47,10 @@ public class RouterConfigController {
         List<String> list = routerConfigService.ping();
         System.out.println(list);
         return new Result().setSuccess(true).setData(list);
+    }
+
+    @RequestMapping("/show/router{id}")
+    public Result show(@PathVariable("id") Integer id) {
+        return new Result().setSuccess(true).setData(routerConfigService.show(id));
     }
 }

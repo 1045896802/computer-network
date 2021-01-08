@@ -1,10 +1,11 @@
 package com.nju.service.impl;
 
 import com.nju.service.RouterConfigService;
+import com.nju.utils.AssertUtil;
+import com.nju.utils.ConfigProperties;
 import com.nju.utils.TelnetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,81 +20,64 @@ import java.util.List;
 public class RouterConfigServiceImpl implements RouterConfigService {
     @Autowired
     TelnetUtil telnetUtil;
-
-    @Value("#{'${router.ip:}'.split(',')}")
-    private String[] router;
-
-    @Value("#{'${routerInterface.router1:}'.split(',')}")
-    private String[] interface1;
-
-    @Value("#{'${routerInterface.router2:}'.split(',')}")
-    private String[] interface2;
-
-    @Value("#{'${routerInterface.router3:}'.split(',')}")
-    private String[] interface3;
-
-    @Value("#{'${staticRouter.router1:}'.split(',')}")
-    private String[] static1;
-
-//    @Value("#{'${staticRouter.router2:}'.split(',')}")
-//    private String[] static2;
-
-    @Value("#{'${staticRouter.router3:}'.split(',')}")
-    private String[] static3;
-
-    @Value("${ping.router1}")
-    private String ping1;
-
-    @Value("${ping.router3}")
-    private String ping3;
+    @Autowired
+    ConfigProperties configProperties;
 
     @Override
     public Boolean staticRouterConfig() {
-        log.info("配置route1静态路由");
-        telnetUtil.sendCommandsByRouter1(static1);
-//        log.info("配置route2静态路由");
-//        telnetUtil.sendCommandsByRouter2(static2);
-        log.info("配置route3静态路由");
-        telnetUtil.sendCommandsByRouter3(static3);
+        for (int i = 1; i < configProperties.getStaticCommand().length; i++) {
+            log.info("配置route" + i + "静态路由");
+            telnetUtil.sendCommands(i, configProperties.getStaticCommand()[i].split(","));
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean staticRouterConfig(Integer id) {
+        log.info("配置route" + id + "静态路由");
+        Integer[] ids = new Integer[]{1, 3};
+        AssertUtil.isContainId(id, ids, "静态路由配置失败,不存在router" + id);
+        telnetUtil.sendCommands(id, configProperties.getStaticCommand()[id].split(","));
         return true;
     }
 
     @Override
     public Boolean routerInterfaceConfig() {
-        log.info("配置route1端口");
-        telnetUtil.sendCommandsByRouter1(interface1);
-        log.info("配置route2端口");
-        telnetUtil.sendCommandsByRouter2(interface2);
-        log.info("配置route3端口");
-        telnetUtil.sendCommandsByRouter3(interface3);
+        for (int i = 1; i < configProperties.getInterfaceCommand().length; i++) {
+            log.info("配置route" + i + "端口");
+            telnetUtil.sendCommands(i, configProperties.getInterfaceCommand()[i].split(","));
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean routerInterfaceConfig(Integer id) {
+        log.info("配置route" + id + "端口");
+        Integer[] ids = new Integer[]{1, 2, 3};
+        AssertUtil.isContainId(id, ids, "静态路由配置失败,不存在router" + id);
+        telnetUtil.sendCommands(id, configProperties.getInterfaceCommand()[id].split(","));
         return true;
     }
 
     @Override
     public List ping() {
-//        List<String> list = new ArrayList<>();
-//        for (int i = 0; i < router.length; i++) {
-//            for (int j = 0; j < router.length; j++) {
-//                if (!telnetUtil.sendCommand("router" + (i + 1), "ping " + router[j]).contains("100 percent")) {
-//                    list.add("Router " + (i + 1) + "与Router " + (j + 1) + "不通");
-//                }
-//            }
-//        }
-//        if (list.size() == 0) {
-//            list.add("ping测试通过");
-//        }
         List<String> list = new ArrayList<>();
         log.info("\nRouter1 ping Router3...");
-        if (telnetUtil.sendCommandByRouter1(ping3).contains("success rate is 0 percent")) {
+        if (telnetUtil.sendCommandByRouter1(configProperties.getPingCommand()[3]).contains("success rate is 0 percent")) {
             list.add("Router 1与Router 3" + "不通");
         }
         log.info("\nRouter3 ping Router1...");
-        if (telnetUtil.sendCommandByRouter3(ping1).contains("success rate is 0 percent")) {
+        if (telnetUtil.sendCommandByRouter3(configProperties.getPingCommand()[1]).contains("success rate is 0 percent")) {
             list.add("Router 1与Router 3" + "不通");
         }
         if (list.size() == 0) {
             list.add("ping测试通过");
         }
         return list;
+    }
+
+    @Override
+    public String show(Integer id) {
+        return telnetUtil.sendCommand(id, "show ip route");
     }
 }

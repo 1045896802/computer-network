@@ -14,10 +14,6 @@ public class TelnetUtil {
      */
     private TelnetConnection[] telnet;
 
-    private final String router1 = "router1";
-    private final String router2 = "router2";
-    private final String router3 = "router3";
-
 //    public TelnetUtil(@Value("${switch.ip}") String ip,
 //                      @Value("${switch.port}") int port,
 //                      @Value("${switch.user}") String user,
@@ -38,27 +34,27 @@ public class TelnetUtil {
                       @Value("${router.password}") String password,
                       @Value("${router.enablePassword}") String enablePassword) {
         try {
-            telnet = new TelnetConnection[ip.length];
+            telnet = new TelnetConnection[ip.length + 1];
             System.out.println("启动Telnet...");
-            for (int i = 0; i < ip.length; i++) {
+            for (int i = 1; i <= ip.length; i++) {
                 System.out.println(ip[i] + " " + port + " " + user + " " + password + " " + enablePassword);
-                telnet[i] = new TelnetConnection(ip[i], port, user, password, enablePassword);
+                telnet[i] = new TelnetConnection(ip[i - 1], port, user, password, enablePassword);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public String sendCommand(String router, String command) {
+    public String sendCommand(Integer routerId, String command) {
         String s = "";
-        System.out.println("router:" + router + ",command:" + command);
-        if (router1.equals(router)) {
+        System.out.println("router:" + routerId + ",command:" + command);
+        if (routerId == 1) {
             telnet[0].sendCommand(command);
             s = telnet[0].sendCommand(command);
-        } else if (router2.equals(router)) {
+        } else if (routerId == 2) {
             telnet[1].sendCommand(command);
             s = telnet[1].sendCommand(command);
-        } else if (router3.equals(router)) {
+        } else if (routerId == 3) {
             telnet[2].sendCommand(command);
             s = telnet[2].sendCommand(command);
         }
@@ -111,9 +107,9 @@ public class TelnetUtil {
         return s;
     }
 
-    public void sendCommands(String router, String[] commands) {
+    public void sendCommands(Integer routerId, String[] commands) {
         for (String command : commands) {
-            System.out.println(sendCommand(router, command));
+            System.out.println(sendCommand(routerId, command));
             System.out.println();
         }
     }

@@ -11,18 +11,34 @@ import java.util.List;
  */
 public interface RouterConfigService {
     /**
-     * 配置路由器静态路由
+     * 一键配置路由器静态路由
      *
      * @return
      */
     Boolean staticRouterConfig();
 
     /**
-     * 配置路由器端口
+     * 分别配置路由器静态路由
+     *
+     * @param id
+     * @return
+     */
+    Boolean staticRouterConfig(Integer id);
+
+    /**
+     * 一键配置路由器端口
      *
      * @return
      */
     Boolean routerInterfaceConfig();
+
+    /**
+     * 分别配置路由器端口
+     *
+     * @param id
+     * @return
+     */
+    Boolean routerInterfaceConfig(Integer id);
 
     /**
      * 测试连通性
@@ -30,4 +46,12 @@ public interface RouterConfigService {
      * @return ping的结果
      */
     List ping();
+
+    /**
+     * show ip route的结果
+     *
+     * @param id
+     * @return
+     */
+    String show(Integer id);
 }

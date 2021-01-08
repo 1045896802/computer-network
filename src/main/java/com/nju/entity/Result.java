@@ -1,6 +1,5 @@
 package com.nju.entity;
 
-import com.nju.exception.BusinessMsgEnum;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -79,16 +78,6 @@ public class Result<T> {
         this.data = data;
         this.code = "0";
         this.success = success;
-    }
-
-    /**
-     * 使用自定义异常作为参数传递状态码和提示信息
-     *
-     * @param msgEnum
-     */
-    public Result(BusinessMsgEnum msgEnum) {
-        this.code = msgEnum.code();
-        this.msg = msgEnum.msg();
     }
 }
 
