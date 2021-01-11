@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author Maxyu
  * @date 2021/1/7 23:07
+ * @description 获取配置信息
  */
 @ConfigurationProperties(prefix = "router")
 @Component
@@ -15,6 +16,6 @@ import org.springframework.stereotype.Component;
 @Data
 public class ConfigProperties {
     public String[] interfaceCommand;
-    public String[]  staticCommand;
-    public String[]  pingCommand;
+    public String[] staticCommand;
+    public String[] pingCommand;
 }

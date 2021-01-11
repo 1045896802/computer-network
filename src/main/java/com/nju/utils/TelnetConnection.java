@@ -56,9 +56,6 @@ public class TelnetConnection {
         readUntil("Password:");
         write(enablePassword);
         this.prompt = '#';
-        //System.out.println();
-        // System.out.println("ip:"+sendCommand("")+sendCommand("show ip route"));
-        //System.out.println();
     }
 
     /**

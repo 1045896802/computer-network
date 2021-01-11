@@ -1,8 +1,5 @@
 package com.nju.service;
 
-import com.nju.entity.RouterInterface;
-import com.nju.entity.StaticRouter;
-
 import java.util.List;
 
 /**
@@ -20,7 +17,7 @@ public interface RouterConfigService {
     /**
      * 分别配置路由器静态路由
      *
-     * @param id
+     * @param id 路由器id
      * @return
      */
     Boolean staticRouterConfig(Integer id);
@@ -35,7 +32,7 @@ public interface RouterConfigService {
     /**
      * 分别配置路由器端口
      *
-     * @param id
+     * @param id 路由器id
      * @return
      */
     Boolean routerInterfaceConfig(Integer id);
@@ -50,7 +47,7 @@ public interface RouterConfigService {
     /**
      * show ip route的结果
      *
-     * @param id
+     * @param id 路由器id
      * @return
      */
     String show(Integer id);
