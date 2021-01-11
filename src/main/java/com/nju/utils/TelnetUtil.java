@@ -14,36 +14,36 @@ public class TelnetUtil {
      */
     private TelnetConnection[] telnet;
 
-//    public TelnetUtil(@Value("${switch.ip}") String ip,
-//                      @Value("${switch.port}") int port,
-//                      @Value("${switch.user}") String user,
-//                      @Value("${switch.password}") String password,
-//                      @Value("${switch.enablePassword}") String enablePassword) {
-//        try {
-//            System.out.println(ip + " " + port + " " + user + " " + password);
-//            System.out.println("启动Telnet...");
-//            //telnet[0] = new TelnetConnection(ip, port, user, password, enablePassword);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    public TelnetUtil(@Value("#{'${router.ip:}'.split(',')}") String[] ip,
-                      @Value("${router.port}") int port,
-                      @Value("${router.user}") String user,
-                      @Value("${router.password}") String password,
-                      @Value("${router.enablePassword}") String enablePassword) {
+    public TelnetUtil(@Value("${switch.ip}") String ip,
+                      @Value("${switch.port}") int port,
+                      @Value("${switch.user}") String user,
+                      @Value("${switch.password}") String password,
+                      @Value("${switch.enablePassword}") String enablePassword) {
         try {
-            telnet = new TelnetConnection[ip.length + 1];
+            System.out.println(ip + " " + port + " " + user + " " + password);
             System.out.println("启动Telnet...");
-            for (int i = 1; i <= ip.length; i++) {
-                System.out.println(ip[i] + " " + port + " " + user + " " + password + " " + enablePassword);
-                telnet[i] = new TelnetConnection(ip[i - 1], port, user, password, enablePassword);
-            }
+            //telnet[0] = new TelnetConnection(ip, port, user, password, enablePassword);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+//    public TelnetUtil(@Value("#{'${router.ip:}'.split(',')}") String[] ip,
+//                      @Value("${router.port}") int port,
+//                      @Value("${router.user}") String user,
+//                      @Value("${router.password}") String password,
+//                      @Value("${router.enablePassword}") String enablePassword) {
+//        try {
+//            telnet = new TelnetConnection[ip.length + 1];
+//            System.out.println("启动Telnet...");
+//            for (int i = 1; i <= ip.length; i++) {
+//                System.out.println(ip[i] + " " + port + " " + user + " " + password + " " + enablePassword);
+//                telnet[i] = new TelnetConnection(ip[i - 1], port, user, password, enablePassword);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public String sendCommand(Integer routerId, String command) {
         String s = "";

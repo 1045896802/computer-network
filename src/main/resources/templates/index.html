@@ -1,154 +1,154 @@
 <!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>网络拓扑</title>
-    <style>
-        .wrap {
-            width: 900px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        #left {
-            width: 200px;
-            height: 1000px;
-            float: left;
-        }
-
-        #right {
-            width: 700px;
-            height: 1000px;
-            float: left;
-        }
-    </style>
-
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-
-    <script language="javascript">
-        function pc(element) {
-            var name = element.id;
-            document.getElementById("device").value = name;
-
-            return false;
-        }
-    </script>
-
-    <script>
-        function ping() {
-            $.ajax({
-                type: "post",
-                url: "/ping",
-                data: "",
-                dataType: "json",
-                success: function (data) {
-                    alert("PING成功");
-//					var result=$.parseJSON(data).data;
-                    var result = msg.data;
-                    var str = "";
-                    for (var i = 0; i < result.length; i++) {
-                        str += result[i] + "\n";
-                    }
-                    document.getElementById("pingresult").value = str;
-                },
-                error: function () {
-                    alert("无法连接，PING失败");
-                }
-            });
-            return false;
-        }
-    </script>
-
-    <script>
-        function interface() {
-            $.ajax({
-                type: "post",
-                url: "/interface",
-                data: "",
-                dataType: "json",
-                success: function (data) {
-                    alert("配置成功");
-                },
-                error: function () {
-                    alert("无法连接，配置失败");
-                }
-            });
-            return false;
-        }
-    </script>
-
-    <script>
-        function static() {
-            $.ajax({
-                type: "post",
-                url: "/static",
-                data: "",
-                dataType: "json",
-                success: function (data) {
-                    alert("配置成功");
-                },
-                error: function () {
-                    alert("无法连接，配置失败");
-                }
-            });
-            return false;
-        }
-    </script>
-
-</head>
-
-<body>
-<div class="wrap">
-    <aside id="right">
-
-        <p align="center">
-            <input name="pc" type="image" disabled="disabled" id="pc" onClick="pc(this)" src="img/pc.jpg" width="50"
-                   height="50">
-        </p>
-        <p align="center">
-            <img src="img/line1.jpg" width="17" height="99" alt=""/></p>
-        <p align="center">
-            <input name="swithcer" type="image" disabled="disabled" id="swithcer" onClick="pc(this)"
-                   src="img/switcher.jpg"
-                   width="50" height="50">
-        </p>
-
-        <p align="center">
-            <img src="img/lline.jpg" width="87" height="98" alt="" id="router1s"/> <img src="img/bline.jpg" width="15"
-                                                                                        height="99" alt=""
-                                                                                        id="router2s"/>
-            <img src="img/rline.jpg" width="87" height="98" alt="" id="router3s"/></p>
-        <p align="center">
-            <input name="router1" type="image" id="router1" src="img/router.jpg" width="50" height="50"
-                   onClick="pc(this)">
-            <img src="img/vline.jpg" width="61" height="11" alt="" id="router12e"/>
-            <input name="router2" type="image" id="router2" src="img/router.jpg" width="50" height="50"
-                   onClick="pc(this)">
-            <img src="img/vline.jpg" width="61" height="11" alt="" id="router23e"/>
-            <input name="router3" type="image" id="router3" src="img/router.jpg" width="50" height="50"
-                   onClick="pc(this)">
-        </p>
-        <p align="center">
-            <input type="button" name="ping" value="PING" style="font-size: 25px" onClick="ping()">
-        </p>
-        <p align="center">
-            <textarea name="pingresult" readonly="readonly" id="pingresult" style="font-size:40px"></textarea>
-        </p>
-
-    </aside>
-
-    <section id="left">
-        <form style="font-size: 20px">
-            <p>
-                <input type="button" style="font-size: 25px" value="配置接口" onClick="interface()">
-            </p>
-            <p>
-                <input type="button" name="button" id="button" value="配置静态路由" style="font-size: 25px"
-                       onClick="static()">
-            </p>
-        </form>
-    </section>
-</div>
-</body>
-
+<html class="x-admin-sm"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>计算机网络27组大作业后台页面</title>
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="stylesheet" href="css/font.css">
+        <link rel="stylesheet" href="css/xadmin.css">
+        <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
+        <script src="lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="js/xadmin.js"></script>
+        <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script>
+            // 是否开启刷新记忆tab功能
+            // var is_remember = false;
+        </script>
+        <script>
+            window.onload=function(){
+                alert("fffff");
+            }
+        </script>
+    </head>
+    <body class="index">
+        <!-- 顶部开始 -->
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">计算机网络27组大作业后台页面</a></div>
+            <div class="left_open">
+                <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+            </div>
+        </div>
+        <!-- 顶部结束 -->
+        <!-- 中部开始 -->
+        <!-- 左侧菜单开始 -->
+        <div class="left-nav">
+            <div id="side-nav">
+                <ul id="nav">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="实验拓扑图">&#xe606;</i>
+                            <cite>实验拓扑图</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('实验拓扑图查看','/top.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>实验拓扑图查看</cite></a>
+                            </li>
+                                </ul>
+					</li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="路由器管理">&#xe60c;</i>
+                            <cite>路由器管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('路由器1','router1.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>路由器1</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('路由器2','router2.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>路由器2</cite></a>
+                            </li>
+					        <li>
+                                <a onclick="xadmin.add_tab('路由器3','router3.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>路由器3</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="配置管理">&#xe61b;</i>
+                            <cite>配置管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('配置静态路由','static.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>配置静态路由</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('配置端口','interface.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>配置端口</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="测试连通性">&#xe683;</i>
+                            <cite>测试连通性</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('PING','ping.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>PING</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="小组成员">&#xe61a;</i>
+                            <cite>小组成员</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('小组成员','member.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>小组成员</cite></a>
+                            </li>
+                        </ul>
+                    </li>
+				</ul>
+            </div>
+        </div>
+        <!-- <div class="x-slide_left"></div> -->
+        <!-- 左侧菜单结束 -->
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+            <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+                <ul class="layui-tab-title">
+                    <li class="home">
+                        <i class="layui-icon">&#xe68e;</i>桌面</li></ul>
+                <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
+                    <dl>
+                        <dd data-type="this">关闭当前</dd>
+                        <dd data-type="other">关闭其它</dd>
+                        <dd data-type="all">关闭全部</dd></dl>
+                </div>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe  frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                    </div>
+                </div>
+                <div id="tab_show"></div>
+            </div>
+        </div>
+        <div class="page-content-bg"></div>
+        <style id="theme_style"></style>
+    </body>
 </html>
