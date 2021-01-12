@@ -78,7 +78,6 @@ router:
       ip add 172.18.0.2 255.255.255.0,
       no shutdown,
       exit
-
   staticCommand:
     #router0占位符
     -
@@ -101,6 +100,43 @@ router:
     -
     #router3
     - ping 172.17.0.1
+
+
+  noInterfaceCommand:
+    #router0占位符
+    -
+    #router1
+    - conf t,
+      int s0/0/0,
+      no shutdown,
+      exit
+    #router2
+    - conf t,
+      int s0/0/1,
+      no shutdown,
+      exit,
+      int s0/0/0,
+      no shutdown,
+      exit
+    #router3
+    - conf t,
+      int s0/0/0,
+      no shutdown,
+      exit
+
+  noStaticCommand:
+    #router0占位符
+    -
+    #router1
+    - conf t,
+      no ip route 172.18.0.0 255.255.255.0 s0/0/0,
+      exit
+    #router2占位符
+    -
+    #router3:
+    - conf t,
+      no ip route 172.17.0.0 255.255.255.0 s0/0/0,
+      exit
 
 #路由器端口的配置命令
 routerInterface:

@@ -63,11 +63,11 @@ public class RouterConfigServiceImpl implements RouterConfigService {
     public List ping() {
         List<String> list = new ArrayList<>();
         log.info("\nRouter1 ping Router3...");
-        if (telnetUtil.sendCommandByRouter1(configProperties.getPingCommand()[3]).contains("success rate is 0 percent")) {
+        if (telnetUtil.sendCommandByRouter1(configProperties.getPingCommand()[3]).contains("Success rate is 0 percent")) {
             list.add("Router 1与Router 3" + "不通");
         }
         log.info("\nRouter3 ping Router1...");
-        if (telnetUtil.sendCommandByRouter3(configProperties.getPingCommand()[1]).contains("success rate is 0 percent")) {
+        if (telnetUtil.sendCommandByRouter3(configProperties.getPingCommand()[1]).contains("Success rate is 0 percent")) {
             list.add("Router 1与Router 3" + "不通");
         }
         if (list.size() == 0) {

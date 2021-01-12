@@ -59,14 +59,10 @@
 				url:"/ping",
 				data:"",
 				dataType:"json",
-				success:function(data){
+				success:function(msg){
 					alert("PING成功");
 					var result = msg.data;
-					var str="";
-					for(var i=0;i<result.length;i++){
-						str+=result[i]+"\n";
-					}
-					document.getElementById("pingresult").value=str;
+					document.getElementById("pingresult").value=result;
 				},
 				error:function(){
 					alert("无法连接，PING失败");
